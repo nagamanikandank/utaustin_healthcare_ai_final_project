@@ -1,4 +1,4 @@
-medAIcal schedulAIr
+# medAIcal schedulAIr
 
 A Windows desktop app (Flutter) that combines clinic scheduling, audio recording → transcription (AWS Transcribe), keyword visualization (t-SNE), and lightweight analytics (logistic classifier + LLM summaries).
 
@@ -16,7 +16,7 @@ A Windows desktop app (Flutter) that combines clinic scheduling, audio recording
 
         ml_insurance_classifier.py → logistic regression on patient keywords (per-insurer features)
 
-Features
+# Features
 
     Login (demo): any username/password is accepted.
 
@@ -43,7 +43,7 @@ Features
 
         Shows accuracy and a bar chart of top features per insurer (LR coefficients).
 
-Quick Start (Windows)
+# Quick Start (Windows)
 1) Prerequisites
 
     Flutter (Windows desktop enabled):
@@ -157,7 +157,7 @@ static const String _analysisScriptPath = r'C:\path\to\analyze_transcript_with_l
 
 flutter run -d windows
 
-Project Structure (key files)
+# Project Structure (key files)
 
 lib/
   main.dart
@@ -189,7 +189,7 @@ python/
 
     Paths may differ; just ensure the Dart code points to your real script locations.
 
-How it works (flow)
+# How it works (flow)
 
     Record → Stop (Current Visit tab)
 
@@ -203,13 +203,13 @@ How it works (flow)
 
     {"transcript": "..."}
 
-Visualize (t-SNE)
+# Visualize (t-SNE)
 
     tsne_and_analysis.py returns:
 
     {"points":[{"label":"pain","x":0.2,"y":-0.4},...], "analysis":"Top terms: ..."}
 
-LLM Analysis
+# LLM Analysis
 
     analyze_transcript_with_llm.py returns:
 
@@ -238,7 +238,7 @@ Replace the Windows app icon
     flutter clean
     flutter build windows
 
-Troubleshooting
+# Troubleshooting
 
     LateInitializationError / empty schedule: initialize lists to [] and show a loader until async loads finish.
 
@@ -252,10 +252,11 @@ Troubleshooting
 
     t-SNE not visible: ensure coordinates are normalized (the Python script already scales to [-1,1]) or auto-scale in the painter.
 
-Security & Compliance
+# Security & Compliance
 
     This is a prototype. If handling PHI, ensure encryption, access controls, and retention policies that comply with your jurisdiction (e.g., HIPAA).
 
     Store secrets in environment variables or a secrets manager—never hardcode.
+
 
     Limit IAM permissions for AWS Transcribe to the minimum necessary.
