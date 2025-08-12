@@ -2,6 +2,8 @@
 
 A Windows desktop app (Flutter) that combines clinic scheduling, audio recording → transcription (AWS Transcribe), keyword visualization (t-SNE), and lightweight analytics (logistic classifier + LLM summaries).
 
+![Architecture Diagram](https://github.com/nagamanikandank/utaustin_healthcare_ai_final_project/blob/main/ArchitectureDiagram.png)
+
     Platform: Flutter (Windows desktop)
 
     Back end: Local Postgres (patients, notes, keyword maps)
@@ -65,26 +67,26 @@ A Windows desktop app (Flutter) that combines clinic scheduling, audio recording
         Install & add to PATH (e.g., C:\ffmpeg\bin)
 
 2) Clone & install Flutter deps
-
+```
 flutter pub get
-
+```
 3) Configure assets (logo)
 
     SVGs in assets/brand/ (e.g., medaical_wordmark.svg, medaical_mark.svg)
 
     Ensure pubspec.yaml has:
-
+    ```
     flutter:
       assets:
         - assets/brand/medaical_wordmark.svg
         - assets/brand/medaical_mark.svg
     dependencies:
       flutter_svg: ^2.0.9
-
+    ```
 4) Postgres: schema & sample data
 
 Create the database and run:
-
+```
 -- Tables
 CREATE TABLE IF NOT EXISTS patients (
   id TEXT PRIMARY KEY,
@@ -120,13 +122,13 @@ SELECT
     FROM patient_keywords pk WHERE pk.patient_id = p.id ORDER BY pk.id
   ), '{}') AS keyword_map
 FROM patients p;
-
+```
     Seed a few patients, notes, and keywords as you like. The app can also fall back to mock data while you’re wiring this up.
 
 5) Python environment
 
-Create a venv and install dependencies:
-
+##Create a venv and install dependencies:
+```
 py -3 -m venv .venv
 .\.venv\Scripts\activate
 pip install -U pip
@@ -134,15 +136,17 @@ pip install amazon-transcribe-streaming-sdk aiofile spacy gensim scikit-learn nu
 python -m spacy download en_core_web_sm
 :: (Optional) SciSpaCy model if you have it:
 :: pip install scispacy && python -m spacy download en_core_sci_sm
-
-Set credentials (PowerShell):
-
+```
+# Set credentials (PowerShell):
+```
 setx AWS_ACCESS_KEY_ID "YOUR_AWS_KEY"
 setx AWS_SECRET_ACCESS_KEY "YOUR_AWS_SECRET"
 setx AWS_REGION "us-east-1"
+```
 
+```
 setx OPENAI_API_KEY "sk-..."
-
+```
 (Open a new terminal after setx so env vars are visible.)
 6) Point the app at your Python scripts
 
@@ -158,7 +162,7 @@ static const String _analysisScriptPath = r'C:\path\to\analyze_transcript_with_l
 flutter run -d windows
 
 # Project Structure (key files)
-
+```
 lib/
   main.dart
   screens/
@@ -186,7 +190,7 @@ python/
   tsne_and_analysis.py
   analyze_transcript_with_llm.py
   ml_insurance_classifier.py
-
+```
     Paths may differ; just ensure the Dart code points to your real script locations.
 
 # How it works (flow)
@@ -260,3 +264,4 @@ Replace the Windows app icon
 
 
     Limit IAM permissions for AWS Transcribe to the minimum necessary.
+
